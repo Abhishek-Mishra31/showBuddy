@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import paymentAPI from '../services/paymentAPI';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 
 const SeatSelection = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const bookingData = location.state;
+  const { isAuthenticated } = useAuth();
+  const toast = useToast();
   
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [seatLayout, setSeatLayout] = useState([]);
@@ -67,7 +71,7 @@ const SeatSelection = () => {
       if (selectedSeats.length < 10) { // Max 10 seats
         setSelectedSeats([...selectedSeats, seatId]);
       } else {
-        alert('You can select maximum 10 seats');
+        toast.error('You can select maximum 10 seats');
       }
     }
   };
@@ -80,8 +84,12 @@ const SeatSelection = () => {
   };
 
   const handleProceedToPayment = async () => {
+    if (!isAuthenticated) {
+      toast.error('you need to login or register first to book any show');
+      return;
+    }
     if (selectedSeats.length === 0) {
-      alert('Please select at least one seat');
+      toast.error('Please select at least one seat');
       return;
     }
 
@@ -118,7 +126,7 @@ const SeatSelection = () => {
           if (verify.success) {
             navigate('/confirmation', { state: { ...paymentData, payment: response } });
           } else {
-            alert('Payment verification failed');
+            toast.error('Payment verification failed');
           }
         },
         theme: { color: '#ff6b6b' },
@@ -127,7 +135,7 @@ const SeatSelection = () => {
       rz.open();
     } catch (err) {
       console.error(err);
-      alert('Payment initiation failed');
+      toast.error('Payment initiation failed');
     }
   };
 
@@ -139,6 +147,7 @@ const SeatSelection = () => {
   return (
     <div className="seat-selection">
       <div className="container">
+        {/* Auth gating is handled via toasts and blocking actions */}
         {/* Booking Info Header */}
         <div className="booking-info-header">
           <h1 className="page-title">Select Your Seats</h1>
@@ -195,9 +204,9 @@ const SeatSelection = () => {
           {seatLayout.map((row, rowIndex) => (
             <div key={rowIndex} className="seat-row">
               <div className="row-label">{row[0]?.row}</div>
-              <div className="seats">
-                {row.map((seat, seatIndex) => (
-                  <React.Fragment key={seat.id}>
+            <div className="seats">
+              {row.map((seat, seatIndex) => (
+                <React.Fragment key={seat.id}>
                     <button
                       className={`seat ${seat.type} ${
                         seat.isBooked ? 'booked' : 

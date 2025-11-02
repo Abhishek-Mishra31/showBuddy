@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createBooking } from '../services/bookingApi';
+import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 
 const Payment = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const bookingData = location.state;
+  const { isAuthenticated } = useAuth();
+  const toast = useToast();
   
   const [paymentMethod, setPaymentMethod] = useState('card');
   const [cardDetails, setCardDetails] = useState({
@@ -25,6 +29,10 @@ const Payment = () => {
   };
 
   const handlePayment = async () => {
+    if (!isAuthenticated) {
+      toast.error('you need to login or register first to book any show');
+      return;
+    }
     setIsProcessing(true);
     
     try {
@@ -40,9 +48,7 @@ const Payment = () => {
         time: bookingData.time,
         seats: bookingData.seats,
         totalAmount: bookingData.totalAmount,
-        paymentMethod,
-        userEmail: 'user@example.com', // In a real app, this would come from auth context
-        userName: 'Demo User' // In a real app, this would come from auth context
+        paymentMethod
       };
       
       // Create booking via API
@@ -64,7 +70,7 @@ const Payment = () => {
     } catch (error) {
       setIsProcessing(false);
       console.error('Payment failed:', error);
-      alert('Payment failed: ' + error.message);
+      toast.error('Payment failed: ' + error.message);
     }
   };
 
@@ -77,6 +83,7 @@ const Payment = () => {
     <div className="payment-page">
       <div className="container">
         <div className="payment-container">
+          {/* Auth gating handled via toast and disabled actions */}
           {/* Booking Summary */}
           <div className="booking-summary-section">
             <h2 className="section-title">Booking Summary</h2>

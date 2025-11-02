@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useMovies } from '../context/MovieContext';
 import { getBookingStats } from '../services/bookingApi';
+import { useToast } from '../context/ToastContext';
 
 const Admin = () => {
   const { movies, loading: moviesLoading, createMovie, updateMovie, deleteMovie } = useMovies();
@@ -14,6 +15,7 @@ const Admin = () => {
     ratings: ''
   });
   const [editingMovie, setEditingMovie] = useState(null);
+  const toast = useToast();
 
   useEffect(() => {
     fetchBookingStats();
@@ -26,6 +28,7 @@ const Admin = () => {
       setBookingStats(stats);
     } catch (error) {
       console.error('Error fetching booking stats:', error);
+      toast.error('Failed to fetch booking statistics: ' + error.message);
     } finally {
       setStatsLoading(false);
     }
@@ -36,14 +39,16 @@ const Admin = () => {
     try {
       if (editingMovie) {
         await updateMovie(editingMovie._id, movieForm);
+        toast.success('Movie updated successfully');
         setEditingMovie(null);
       } else {
         await createMovie(movieForm);
+        toast.success('Movie created successfully');
       }
       setMovieForm({ title: '', year: '', genre: '', ratings: '' });
     } catch (error) {
       console.error('Error saving movie:', error);
-      alert('Error saving movie: ' + error.message);
+      toast.error('Error saving movie: ' + error.message);
     }
   };
 
@@ -62,9 +67,10 @@ const Admin = () => {
     if (window.confirm('Are you sure you want to delete this movie?')) {
       try {
         await deleteMovie(movieId);
+        toast.success('Movie deleted successfully');
       } catch (error) {
         console.error('Error deleting movie:', error);
-        alert('Error deleting movie: ' + error.message);
+        toast.error('Error deleting movie: ' + error.message);
       }
     }
   };

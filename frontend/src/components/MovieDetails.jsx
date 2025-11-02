@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useMovies } from '../context/MovieContext';
+import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import { getStarRating, getPosterUrl } from '../utils/helpers';
 
 const MovieDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { movies } = useMovies();
+  const { isAuthenticated } = useAuth();
+  const toast = useToast();
   const [movie, setMovie] = useState(null);
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
   const [selectedTheater, setSelectedTheater] = useState('');
+  
 
   // Mock data for theaters and showtimes
   const theaters = [
@@ -54,7 +59,13 @@ const MovieDetails = () => {
 
   const handleBooking = () => {
     if (!selectedDate || !selectedTime || !selectedTheater) {
-      alert('Please select date, time, and theater');
+      toast.error('Please select date, time, and theater');
+      return;
+    }
+
+    // Check if user is authenticated
+    if (!isAuthenticated) {
+      toast.error('you need to login or register first to book any show');
       return;
     }
 
@@ -127,6 +138,7 @@ const MovieDetails = () => {
       {/* Booking Section */}
       <section className="booking-section">
         <div className="container">
+          
           <h2 className="booking-title">Book Your Tickets</h2>
 
           {/* Date Selection */}

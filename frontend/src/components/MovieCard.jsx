@@ -76,24 +76,24 @@ const MovieCard = ({ movie, onEdit }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 group">
-      {/* Movie Poster */}
-      <div className="relative h-64 overflow-hidden">
-        {movie.posterImage ? (
+    <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden border-2 border-red-600 group">
+      {/* Action buttons */}
+      <div className="flex justify-end mb-2">
+        {/* poster removed
           <img
             src={getPosterUrl(movie.posterImage)}
             alt={`${movie.title} poster`}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className="hidden"
             onError={(e) => {
               e.target.style.display = 'none';
               e.target.nextSibling.style.display = 'flex';
             }}
           />
-        ) : null}
+        */}
         
-        {/* Fallback placeholder */}
+        {/* removed poster placeholder */}
         <div 
-          className={`absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center text-white text-center ${movie.posterImage ? 'hidden' : 'flex'}`}
+          className="hidden"
         >
           <div>
             <svg
@@ -108,11 +108,10 @@ const MovieCard = ({ movie, onEdit }) => {
                 clipRule="evenodd"
               />
             </svg>
-            <p className="text-sm font-medium opacity-90">No Poster</p>
           </div>
         </div>
         
-        {/* Action buttons overlay */}
+      
         <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
           <div className="flex space-x-1">
             <button
@@ -162,6 +161,13 @@ const MovieCard = ({ movie, onEdit }) => {
 
       {/* Movie Details */}
       <div className="p-4">
+        {/* {movie.posterImage && (
+          <img
+            src={getPosterUrl(movie.posterImage)}
+            alt={`${movie.title} poster`}
+            className="w-32 h-32 object-cover rounded mb-3"
+          />
+        )} */}
         {/* Title and Year */}
         <div className="mb-3">
           <h3 className="text-lg font-semibold text-gray-900 mb-1 line-clamp-2">

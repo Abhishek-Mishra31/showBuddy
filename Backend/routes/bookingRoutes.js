@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Booking = require('../models/Booking');
 const Movie = require('../models/Movie');
+const User = require('../models/User');
+const auth = require('../middleware/auth');
 
 // Get all bookings
 router.get('/', async (req, res) => {
@@ -56,7 +58,8 @@ router.get('/:id', async (req, res) => {
 });
 
 // Create new booking
-router.post('/', async (req, res) => {
+// Create new booking (protected)
+router.post('/', auth, async (req, res) => {
   try {
     const {
       movieId,
@@ -66,16 +69,14 @@ router.post('/', async (req, res) => {
       time,
       seats,
       totalAmount,
-      paymentMethod,
-      userEmail,
-      userName
+      paymentMethod
     } = req.body;
 
     // Validate required fields
-    if (!movieId || !movieTitle || !theater || !date || !time || !seats || !totalAmount || !paymentMethod || !userEmail || !userName) {
+    if (!movieId || !movieTitle || !theater || !date || !time || !seats || !totalAmount || !paymentMethod) {
       return res.status(400).json({ 
         message: 'Missing required fields',
-        required: ['movieId', 'movieTitle', 'theater', 'date', 'time', 'seats', 'totalAmount', 'paymentMethod', 'userEmail', 'userName']
+        required: ['movieId', 'movieTitle', 'theater', 'date', 'time', 'seats', 'totalAmount', 'paymentMethod']
       });
     }
 
@@ -83,6 +84,12 @@ router.post('/', async (req, res) => {
     const movie = await Movie.findById(movieId);
     if (!movie) {
       return res.status(404).json({ message: 'Movie not found' });
+    }
+
+    // Get user details from auth token
+    const user = await User.findById(req.user.id).select('name email');
+    if (!user) {
+      return res.status(401).json({ message: 'Unauthorized: user not found' });
     }
 
     // Create new booking
@@ -95,8 +102,8 @@ router.post('/', async (req, res) => {
       seats,
       totalAmount,
       paymentMethod,
-      userEmail,
-      userName
+      userEmail: user.email,
+      userName: user.name || 'User'
     });
 
     const savedBooking = await booking.save();

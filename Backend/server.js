@@ -3,6 +3,7 @@ const cors = require('cors');
 require('dotenv').config();
 const passport = require('passport');
 const session = require('express-session');
+const rateLimit = require('express-rate-limit');
 const connectDB = require('./db');
 const movieRoutes = require('./routes/movieRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
@@ -16,12 +17,24 @@ const app = express();
 
 connectDB();
 
+const apiLimiter = rateLimit({
+  windowMs: 24 * 60 * 60 * 1000, // 1 day
+  max: 50,
+  message: {
+    success: false,
+    message: 'Rate limit exceeded. You can make up to 50 requests per day.',
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // Middleware
 app.use(cors({
   origin: process.env.CLIENT_URL || 'http://localhost:3000',
   credentials: true
 }));
 
+app.use(apiLimiter);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getUserBookings, cancelBooking } from '../services/bookingApi';
+import { useToast } from '../context/ToastContext';
 
 const MyBookings = () => {
   const navigate = useNavigate();
+  const toast = useToast();
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all'); // all, upcoming, past
@@ -54,16 +56,16 @@ const MyBookings = () => {
       try {
         await cancelBooking(bookingId);
         setBookings(bookings.filter(booking => booking.id !== bookingId));
-        alert('Booking cancelled successfully!');
+        toast.success('Booking cancelled successfully!');
       } catch (error) {
         console.error('Error cancelling booking:', error);
-        alert('Failed to cancel booking: ' + error.message);
+        toast.error('Failed to cancel booking: ' + error.message);
       }
     }
   };
 
   const handleDownloadTicket = (booking) => {
-    alert(`Downloading ticket for ${booking.movieTitle}`);
+    toast.info(`Downloading ticket for ${booking.movieTitle}`);
   };
 
   if (loading) {

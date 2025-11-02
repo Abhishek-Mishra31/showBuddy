@@ -69,6 +69,68 @@
   text-align: center;
 }
 
+/* Auth required banner */
+.auth-required-banner {
+  background-color: #fdecea;
+  color: #c0392b;
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  text-align: center;
+  border: 1px solid #f5c6cb;
+}
+
+/* Toast styles */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 2000;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  color: #fff;
+  animation: slideUp 0.3s ease, fadeIn 0.3s ease;
+}
+
+.toast.success {
+  background: linear-gradient(45deg, #28a745, #20c997);
+}
+
+.toast.error {
+  background: linear-gradient(45deg, #dc3545, #c82333);
+}
+
+.toast.info {
+  background: linear-gradient(45deg, #6c757d, #495057);
+}
+
+.toast-icon {
+  font-size: 1.1rem;
+}
+
+.toast-message {
+  flex: 1;
+  font-weight: 600;
+}
+
+.toast-close {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.9);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
 /* Popup Styles */
 .popup-overlay {
   position: fixed;
@@ -1829,7 +1891,7 @@
 }
 
 .movie-list-container {
-  max-width: 1280px;
+  max-width: fit-content;
   margin: 0 auto;
   padding: 1rem;
 }
@@ -2237,7 +2299,15 @@
   }
 
   .genre-filters {
-    justify-content: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .genre-filters::-webkit-scrollbar {
+    display: none;
   }
 
   .sort-section {

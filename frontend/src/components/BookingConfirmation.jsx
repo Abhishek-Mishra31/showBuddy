@@ -1,10 +1,12 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useToast } from '../context/ToastContext';
 
 const BookingConfirmation = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const confirmationData = location.state;
+  const toast = useToast();
 
   if (!confirmationData) {
     navigate('/');
@@ -13,7 +15,7 @@ const BookingConfirmation = () => {
 
   const handleDownloadTicket = () => {
     // Simulate ticket download
-    alert('Ticket downloaded successfully!');
+    toast.success('Ticket downloaded successfully!');
   };
 
   const handleGoHome = () => {

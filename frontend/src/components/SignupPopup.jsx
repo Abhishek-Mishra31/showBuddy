@@ -1,52 +1,45 @@
-import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+import React, { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 const SignupPopup = ({ isOpen, onClose }) => {
   const { register } = useAuth();
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+    name: "",
+    email: "",
+    password: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    
-    // Check if passwords match
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords don't match");
-      return;
-    }
-    
+    setError("");
+
     setLoading(true);
-    
+
     try {
       // Remove confirmPassword before sending to API
-      const { confirmPassword, ...userData } = formData;
-      
+      const { ...userData } = formData;
+
       const result = await register(userData);
       if (result.success) {
         // Reset form
-        setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+        setFormData({ name: "", email: "", password: "" });
         // Close popup
         onClose();
       } else {
-        setError(result.error || 'Registration failed');
+        setError(result.error || "Registration failed");
       }
     } catch (err) {
-      setError('An error occurred during registration');
+      setError("An error occurred during registration");
       console.error(err);
     } finally {
       setLoading(false);
@@ -60,12 +53,13 @@ const SignupPopup = ({ isOpen, onClose }) => {
       <div className="popup-content">
         <div className="popup-header">
           <h2>Sign Up</h2>
-          <button type="button" className="close-btn" onClick={onClose}>×</button>
+          <button type="button" className="close-btn" onClick={onClose}>
+            ×
+          </button>
         </div>
         <form onSubmit={handleSubmit} className="popup-form">
           {error && <div className="error-message">{error}</div>}
           <div className="form-group">
-           
             <input
               type="text"
               id="name"
@@ -77,7 +71,6 @@ const SignupPopup = ({ isOpen, onClose }) => {
             />
           </div>
           <div className="form-group">
-           
             <input
               type="email"
               id="email"
@@ -89,7 +82,6 @@ const SignupPopup = ({ isOpen, onClose }) => {
             />
           </div>
           <div className="form-group">
-          
             <input
               type="password"
               id="password"
@@ -100,20 +92,24 @@ const SignupPopup = ({ isOpen, onClose }) => {
               placeholder="Create a password"
             />
           </div>
-         
+
           <div className="form-footer">
             <button type="submit" className="submit-btn" disabled={loading}>
-              {loading ? 'Creating Account...' : 'Create Account'}
+              {loading ? "Creating Account..." : "Create Account"}
             </button>
           </div>
-          
+
           <div className="or-divider">
             <span>OR</span>
           </div>
-          
-          <button type="button" className="google-btn" onClick={() => {
-            window.location.href = 'http://localhost:1000/api/users/google';
-          }}>
+
+          <button
+            type="button"
+            className="google-btn"
+            onClick={() => {
+              window.location.href = "http://localhost:1000/api/users/google";
+            }}
+          >
             <span>🔍</span> Sign up with Google
           </button>
         </form>

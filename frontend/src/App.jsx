@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MovieProvider } from './context/MovieContext';
 import { AuthProvider } from './context/AuthContext';
+import { ToastProvider } from './context/ToastContext';
 import Navbar from './components/Navbar';
 import HomePage from './components/HomePage';
 import MovieList from './components/MovieList';
@@ -12,15 +13,17 @@ import BookingConfirmation from './components/BookingConfirmation';
 import MyBookings from './components/MyBookings';
 import Admin from './components/Admin';
 import './App.css';
+import './responsive.css';
 
 function App() {
   return (
-    <AuthProvider>
-      <MovieProvider>
-        <Router>
-          <div className="App">
-            <Navbar />
-            <Routes>
+    <ToastProvider>
+      <AuthProvider>
+        <MovieProvider>
+          <Router>
+            <div className="App">
+              <Navbar />
+              <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/movies" element={<MovieList />} />
             <Route path="/movie/:id" element={<MovieDetails />} />
@@ -29,11 +32,12 @@ function App() {
             <Route path="/booking-confirmation" element={<BookingConfirmation />} />
             <Route path="/my-bookings" element={<MyBookings />} />
             <Route path="/admin" element={<Admin />} />
-          </Routes>
-          </div>
-        </Router>
-      </MovieProvider>
-    </AuthProvider>
+              </Routes>
+            </div>
+          </Router>
+        </MovieProvider>
+      </AuthProvider>
+    </ToastProvider>
   );
 }
 

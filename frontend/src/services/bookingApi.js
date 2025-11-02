@@ -40,10 +40,12 @@ export const getBookingById = async (bookingId) => {
 // Create a new booking
 export const createBooking = async (bookingData) => {
   try {
+    const token = localStorage.getItem('token');
     const response = await fetch(`${API_BASE_URL}/bookings`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        ...(token ? { 'x-auth-token': token } : {})
       },
       body: JSON.stringify(bookingData),
     });
