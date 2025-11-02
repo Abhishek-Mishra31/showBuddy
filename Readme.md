@@ -53,6 +53,13 @@ Movie_App/
 PORT=1000
 MONGODB_URI=mongodb://localhost:27017/My_Movie_App
 CLIENT_URL=http://localhost:3000
+SESSION_SECRET=movie-app-secret
+JWT_SECRET=your-secret-key
+
+# Google OAuth (create credentials in Google Cloud Console)
+GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+GOOGLE_CALLBACK_URL=http://localhost:1000/api/users/google/callback
 ```
 2. Install dependencies and start the server:
 ```
@@ -61,6 +68,13 @@ npm install
 npm run dev   # or: npm start
 ```
 3. The server logs available endpoints at the root `/` and health at `/health`.
+
+### Google OAuth Setup
+- In Google Cloud Console → APIs & Services → Credentials → OAuth 2.0 Client IDs:
+  - Set Authorized JavaScript origins: `http://localhost:1000`
+  - Set Authorized redirect URIs: `http://localhost:1000/api/users/google/callback`
+- Ensure the values match `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, and `GOOGLE_CALLBACK_URL` in `Backend/.env`.
+- The backend redirects to `${CLIENT_URL}/auth/success?token=<JWT>`; the frontend consumes this token and signs the user in.
 
 ## Frontend Setup
 1. Install dependencies and start the dev server:

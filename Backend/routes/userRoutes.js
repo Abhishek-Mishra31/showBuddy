@@ -13,11 +13,13 @@ router.get('/me', auth, getCurrentUser);
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 router.get('/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/login' }),
+  // On failure, send user back to frontend home with a flag
+  passport.authenticate('google', { failureRedirect: `${process.env.CLIENT_URL || 'http://localhost:3000'}/?oauth=failed` }),
   (req, res) => {
     const token = req.user.generateAuthToken();
-    localStorage.setItem('token', token);
-    res.redirect(`${process.env.CLIENT_URL || 'http://localhost:3000/'}`);
+    // Redirect to frontend route that consumes the token
+    const clientUrl = process.env.CLIENT_URL || 'http://localhost:3000';
+    res.redirect(`${clientUrl}/auth/success?token=${token}`);
   }
 );
 
