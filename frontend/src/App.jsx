@@ -4,6 +4,7 @@ import { MovieProvider } from './context/MovieContext';
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
 import Navbar from './components/Navbar';
+import AuthSuccess from './components/AuthSuccess';
 import HomePage from './components/HomePage';
 import MovieList from './components/MovieList';
 import MovieDetails from './components/MovieDetails';
@@ -13,7 +14,6 @@ import BookingConfirmation from './components/BookingConfirmation';
 import MyBookings from './components/MyBookings';
 import Admin from './components/Admin';
 import './App.css';
-import './responsive.css';
 
 function App() {
   return (
@@ -32,6 +32,7 @@ function App() {
             <Route path="/booking-confirmation" element={<BookingConfirmation />} />
             <Route path="/my-bookings" element={<MyBookings />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/auth/success" element={<AuthSuccess />} />
               </Routes>
             </div>
           </Router>

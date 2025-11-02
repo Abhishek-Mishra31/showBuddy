@@ -26,7 +26,7 @@ const SignupPopup = ({ isOpen, onClose }) => {
     setLoading(true);
 
     try {
-      // Remove confirmPassword before sending to API
+      
       const { ...userData } = formData;
 
       const result = await register(userData);

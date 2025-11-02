@@ -86,10 +86,13 @@ const LoginPopup = ({ isOpen, onClose }) => {
             <span>OR</span>
           </div>
           
-          <button type="button" className="google-btn" onClick={() => {
-            console.log('Google login clicked');
-            // Handle Google login logic
-          }}>
+          <button
+            type="button"
+            className="google-btn"
+            onClick={() => {
+              window.location.href = "http://localhost:1000/api/users/google";
+            }}
+          >
             <span>🔍</span> Sign in with Google
           </button>
           

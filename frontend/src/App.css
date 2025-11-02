@@ -221,11 +221,11 @@
   padding: 1.5rem;
 }
 
-.form-group {
+.popup-form .form-group {
   margin-bottom: 1.2rem;
 }
 
-.form-group label {
+.popup-form .form-group label {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 700;
@@ -239,7 +239,7 @@
   border-radius: 4px;
 }
 
-.form-group input {
+.popup-form .form-group input {
   width: 100%;
   padding: 0.8rem;
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -247,15 +247,29 @@
   font-size: 1rem;
   transition: all 0.3s;
   background-color: rgba(255, 255, 255, 0.15);
-  color: white;
+  color: #ffffff;
   font-weight: 500;
+  caret-color: #ffffff;
 }
 
-.form-group input:focus {
+.popup-form .form-group input::placeholder {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.popup-form .form-group input:focus {
   border-color: #e61739;
   outline: none;
   box-shadow: 0 0 0 2px rgba(230, 23, 57, 0.2);
   background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Prevent autofill from forcing white background/text in popups */
+.popup-form input:-webkit-autofill,
+.popup-form input:-webkit-autofill:hover,
+.popup-form input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff;
+  transition: background-color 9999s ease-in-out 0s;
+  box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.15) inset;
 }
 
 .form-footer {
@@ -1429,8 +1443,6 @@
   }
 }
 
-/* MovieDetails section css */
-/* Movie Details Styles */
 .movie-details {
   min-height: 100vh;
   background: #f8f9fa;
@@ -3755,4 +3767,171 @@
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
   }
+}
+
+/* conditional navbar css */
+
+/* Dropdown styles for authenticated user in Navbar */
+.user-dropdown { position: relative; }
+
+.welcome-btn {
+  padding: 0.6rem 1rem;
+  border: 2px solid white;
+  border-radius: 25px;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.welcome-btn:hover { background: rgba(255,255,255,0.25); transform: translateY(-1px); }
+
+.caret { font-size: 0.9rem; opacity: 0.9; transition: transform 0.2s ease; }
+.caret.open { transform: rotate(180deg); }
+
+.dropdown-menu {
+  position: absolute;
+  top: 110%;
+  right: 0;
+  min-width: 160px;
+  background: white;
+  color: #333;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  padding: 8px;
+  z-index: 1500;
+}
+
+.dropdown-item {
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.dropdown-item:hover { background: #f1f3f4; }
+
+@media (max-width: 768px) {
+  .welcome-btn { padding: 0.6rem 0.9rem; }
+  .dropdown-menu { min-width: 140px; }
+}
+
+
+/* ========================= */
+/* Global Responsive Styles  */
+/* ========================= */
+
+/* Base container */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Booking grids used on MovieDetails */
+.date-grid,
+.time-grid,
+.theater-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+/* Summary tweaks */
+.summary-item { align-items: center; }
+.summary-title { font-size: 1.25rem; }
+
+/* Toast responsive tweaks */
+@media (max-width: 1024px) {
+  .toast-container {
+    top: 16px;
+    right: 16px;
+    gap: 8px;
+  }
+  .hero-title { font-size: 3rem; }
+  .hero-section { min-height: 420px; }
+  .popup-content { max-width: 520px; }
+}
+
+@media (max-width: 768px) {
+  .toast-container {
+    top: auto;
+    bottom: 20px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: calc(100% - 24px);
+    max-width: 480px;
+  }
+  .toast { padding: 10px 14px; }
+  .toast-message { font-weight: 600; }
+
+  /* Popup */
+  .popup-overlay { padding: 20px; }
+  .popup-content { width: 100%; max-width: 440px; }
+  .popup-header h2 { font-size: 1.25rem; }
+  .submit-btn { font-size: 0.95rem; }
+
+  /* Hero section */
+  .hero-section { height: 55vh; min-height: 380px; }
+  .hero-title { font-size: 2.4rem; }
+  .hero-meta { gap: 1rem; }
+  .rating-stars { font-size: 1rem; }
+  .rating-value { font-size: 0.95rem; }
+
+  /* Booking grids */
+  .date-grid,
+  .time-grid,
+  .theater-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  /* Admin tweaks */
+  .admin-page { padding: 1.5rem 0; }
+  .admin-header h1 { font-size: 2.1rem; }
+  .movies-table { font-size: 0.95rem; }
+}
+
+@media (max-width: 480px) {
+  .toast-container {
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    transform: none;
+    width: auto;
+    max-width: none;
+  }
+  .toast { padding: 8px 12px; }
+  .toast-message { font-size: 0.9rem; }
+  .toast-close { font-size: 1rem; }
+
+  /* Popup */
+  .popup-content { max-width: 360px; border-radius: 12px; }
+  .popup-header h2 { font-size: 1.1rem; }
+  .close-btn { width: 36px; height: 36px; font-size: 1.4rem; }
+
+  /* Hero section */
+  .hero-section { height: 50vh; min-height: 320px; }
+  .hero-title { font-size: 1.9rem; }
+  .hero-meta { gap: 0.75rem; }
+  .hero-year, .hero-genre { padding: 0.4rem 0.75rem; }
+
+  /* Booking grids */
+  .date-grid,
+  .time-grid,
+  .theater-grid { grid-template-columns: 1fr; }
+  .summary-title { font-size: 1.1rem; }
+  .summary-item img { width: 40px; }
+
+  /* Admin tweaks */
+  .admin-header h1 { font-size: 1.8rem; }
+  .tab-btn { width: 100%; }
 }

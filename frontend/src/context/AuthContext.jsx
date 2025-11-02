@@ -97,6 +97,19 @@ export const AuthProvider = ({ children }) => {
   // Clear error
   const clearError = () => setError(null);
 
+  // Authenticate using an existing token (e.g., from OAuth redirect)
+  const authenticateWithToken = async (incomingToken) => {
+    try {
+      setAuthToken(incomingToken);
+      setToken(incomingToken);
+      await loadUser();
+      return { success: true };
+    } catch (err) {
+      console.error('Error authenticating with token:', err);
+      return { success: false };
+    }
+  };
+
   // Load user on mount and token change
   useEffect(() => {
     loadUser();
@@ -111,6 +124,7 @@ export const AuthProvider = ({ children }) => {
     login,
     logout,
     clearError,
+    authenticateWithToken,
     isAuthenticated: !!currentUser
   };
 

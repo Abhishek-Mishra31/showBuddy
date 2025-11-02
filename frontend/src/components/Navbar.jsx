@@ -2,11 +2,16 @@ import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import LoginPopup from './LoginPopup';
 import SignupPopup from './SignupPopup';
+import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { currentUser, isAuthenticated, logout } = useAuth();
+  const toast = useToast();
   
   const closeLogin = () => setIsLoginOpen(false);
   const closeSignup = () => setIsSignupOpen(false);
@@ -19,6 +24,13 @@ const Navbar = () => {
 
   const isActive = (path) => {
     return location.pathname === path;
+  };
+
+  const handleLogout = () => {
+    logout();
+    setIsDropdownOpen(false);
+    navigate('/');
+    toast.info('Logged out successfully');
   };
 
   return (
@@ -65,12 +77,34 @@ const Navbar = () => {
 
         {/* User Actions */}
         <div className="nav-actions">
-          <button className="nav-btn login-btn" onClick={() => setIsLoginOpen(true)}>
-            Sign In
-          </button>
-          <button className="nav-btn signup-btn" onClick={() => setIsSignupOpen(true)}>
-            Sign Up
-          </button>
+          {isAuthenticated ? (
+            <div className="user-dropdown">
+              <button
+                className="welcome-btn"
+                onClick={() => setIsDropdownOpen((prev) => !prev)}
+                aria-haspopup="true"
+                aria-expanded={isDropdownOpen}
+                title="Account menu"
+              >
+                <span className="welcome-text">Welcome {currentUser?.name || currentUser?.email || 'User'}</span>
+                <span className={`caret ${isDropdownOpen ? 'open' : ''}`}>▾</span>
+              </button>
+              {isDropdownOpen && (
+                <div className="dropdown-menu" role="menu">
+                  <button className="dropdown-item" onClick={handleLogout} role="menuitem">Logout</button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <>
+              <button className="nav-btn login-btn" onClick={() => setIsLoginOpen(true)}>
+                Sign In
+              </button>
+              <button className="nav-btn signup-btn" onClick={() => setIsSignupOpen(true)}>
+                Sign Up
+              </button>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Toggle */}
