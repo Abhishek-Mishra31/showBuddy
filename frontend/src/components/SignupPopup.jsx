@@ -107,7 +107,7 @@ const SignupPopup = ({ isOpen, onClose }) => {
             type="button"
             className="google-btn"
             onClick={() => {
-              window.location.href = "http://localhost:1000/api/users/google";
+              window.location.href = "https://showbuddy.onrender.com/api/users/google";
             }}
           >
             <span>🔍</span> Sign up with Google
