@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create axios instance with base configuration
 const api = axios.create({
-  baseURL: 'http://localhost:1000/api',
+  baseURL: `${process.env.REACT_APP_API_URL}/api`,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ api.interceptors.response.use(
 );
 
 // API URL
-const API_URL = 'http://localhost:1000/api';
+const API_URL = process.env.REACT_APP_API_URL;
 
 // Auth API functions
 export const authAPI = {

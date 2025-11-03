@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:1000/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL
 
 // Get all bookings for a user
 export const getUserBookings = async (userEmail, status = null) => {
