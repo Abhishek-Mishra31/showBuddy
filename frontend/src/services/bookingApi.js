@@ -24,7 +24,7 @@ export const getUserBookings = async (userEmail, status = null) => {
 // Get booking by ID
 export const getBookingById = async (bookingId) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/bookings/${bookingId}`);
+    const response = await fetch(`${API_BASE_URL}/api/bookings/${bookingId}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -41,7 +41,7 @@ export const getBookingById = async (bookingId) => {
 export const createBooking = async (bookingData) => {
   try {
     const token = localStorage.getItem('token');
-    const response = await fetch(`${API_BASE_URL}/bookings`, {
+    const response = await fetch(`${API_BASE_URL}/api/bookings`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ export const createBooking = async (bookingData) => {
 // Update booking status
 export const updateBookingStatus = async (bookingId, status) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/bookings/${bookingId}/status`, {
+    const response = await fetch(`${API_BASE_URL}/api/bookings/${bookingId}/status`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ export const updateBookingStatus = async (bookingId, status) => {
 // Cancel booking
 export const cancelBooking = async (bookingId) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/bookings/${bookingId}`, {
+    const response = await fetch(`${API_BASE_URL}/api/bookings/${bookingId}`, {
       method: 'DELETE',
     });
     
@@ -110,7 +110,7 @@ export const cancelBooking = async (bookingId) => {
 // Get booking statistics
 export const getBookingStats = async (userEmail = null) => {
   try {
-    let url = `${API_BASE_URL}/bookings/stats/summary`;
+    let url = `${API_BASE_URL}/api/bookings/stats/summary`;
     if (userEmail) {
       url += `?userEmail=${encodeURIComponent(userEmail)}`;
     }
