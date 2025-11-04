@@ -31,11 +31,21 @@ const apiLimiter = rateLimit({
 // Middleware
 app.use(
   cors({
-    origin:
-      process.env.CLIENT_URL ||
-      "http://localhost:3000" ||
-      "https://show-buddy.vercel.app",
-      methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        "http://localhost:3000",
+        "https://show-buddy.vercel.app",
+      ];
+      if (process.env.CLIENT_URL) {
+        allowedOrigins.push(process.env.CLIENT_URL);
+      }
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
 );

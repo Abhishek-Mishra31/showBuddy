@@ -3,7 +3,7 @@ const API_BASE_URL = process.env.REACT_APP_API_URL
 // Get all bookings for a user
 export const getUserBookings = async (userEmail, status = null) => {
   try {
-    let url = `${API_BASE_URL}/bookings?userEmail=${encodeURIComponent(userEmail)}`;
+    let url = `${API_BASE_URL}/api/bookings?userEmail=${encodeURIComponent(userEmail)}`;
     if (status) {
       url += `&status=${status}`;
     }

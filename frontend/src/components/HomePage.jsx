@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { getStarRating } from '../utils/helpers';
 
 const HomePage = () => {
-  const { movies } = useMovies();
+  const { movies, loading } = useMovies();
   const navigate = useNavigate();
 
   // Hero movie is the first fetched movie
@@ -20,6 +20,17 @@ const HomePage = () => {
   const handleViewDetails = (movieId) => {
     navigate(`/movie/${movieId}`);
   };
+
+  if (loading) {
+    return (
+      <section className="hero-section">
+        <div className="flex flex-col items-center justify-center z-10">
+          <div className="spinner"></div>
+          <p className="text-xl font-medium text-white mt-4">Fetching awesome movies for you...</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <div className="homepage">

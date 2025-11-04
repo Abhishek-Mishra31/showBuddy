@@ -229,6 +229,21 @@ code {
   z-index: 40;
 }
 
+.spinner {
+  width: 64px;
+  height: 64px;
+  border: 8px solid #bee3f8;
+  border-top-color: #3182ce;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Custom scrollbar styles */
 ::-webkit-scrollbar {
   width: 8px;
