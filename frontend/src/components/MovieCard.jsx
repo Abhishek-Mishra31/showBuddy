@@ -170,7 +170,7 @@ const MovieCard = ({ movie, onEdit }) => {
         )} */}
         {/* Title and Year */}
         <div className="mb-3">
-          <h3 className="text-lg font-semibold text-gray-900 mb-1 line-clamp-2">
+          <h3 className="text-lg font-semibold text-gray mb-1 line-clamp-2">
             {movie.title}
           </h3>
           <p className="text-sm text-gray-600">{movie.year}</p>

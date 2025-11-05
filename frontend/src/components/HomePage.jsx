@@ -45,6 +45,15 @@ const HomePage = () => {
                 : 'none',
             }}
           >
+            {/* Blurred backdrop to simulate wide banner */}
+            <div
+              className="hero-backdrop"
+              style={{
+                backgroundImage: heroMovie.posterImage
+                  ? `url(${getPosterUrl(heroMovie.posterImage)})`
+                  : 'none',
+              }}
+            ></div>
             <div className="hero-overlay"></div>
             <div className="hero-content">
               <div className="hero-text">
@@ -94,7 +103,7 @@ const HomePage = () => {
                     <img
                       src={getPosterUrl(movie.posterImage)}
                       alt={`${movie.title} poster`}
-                      className="poster-image w-full h-64 object-cover"
+                      className="poster-image w-full h-full object-cover"
                       onError={(e) => {
                         e.target.style.display = 'none';
                         e.target.nextSibling.style.display = 'flex';

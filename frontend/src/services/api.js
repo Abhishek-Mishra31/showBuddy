@@ -7,6 +7,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 });
 
 // Request interceptor for logging
@@ -64,7 +65,7 @@ export const authAPI = {
   // Register a new user
   register: async (userData) => {
     try {
-      const response = await axios.post(`${API_URL}/users/register`, userData);
+      const response = await api.post('/users/register', userData);
       return response.data;
     } catch (error) {
       console.error('Error registering user:', error);
@@ -74,7 +75,7 @@ export const authAPI = {
 
   login: async (credentials) => {
     try {
-      const response = await axios.post(`${API_URL}/users/login`, credentials);
+      const response = await api.post('/users/login', credentials);
       return response.data;
     } catch (error) {
       console.error('Error logging in:', error);
@@ -84,7 +85,7 @@ export const authAPI = {
 
   getCurrentUser: async () => {
     try {
-      const response = await axios.get(`${API_URL}/users/me`);
+      const response = await api.get('/users/me');
       return response.data;
     } catch (error) {
       console.error('Error fetching current user:', error);

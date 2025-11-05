@@ -160,6 +160,10 @@ code {
   color: #111827;
 }
 
+.text-white {
+  color: #ffffff;
+}
+
 .bg-white {
   background-color: white;
 }
