@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMovies } from '../context/MovieContext';
-import { formatDate, getRatingColor, getGenreBadgeColor, getPosterUrl } from '../utils/helpers';
+import { formatDate, getRatingColor, getGenreBadgeColor } from '../utils/helpers';
 
 const MovieCard = ({ movie, onEdit }) => {
   const { deleteMovie } = useMovies();

@@ -97,9 +97,9 @@ const LoginPopup = ({ isOpen, onClose }) => {
           </button>
           
           <div className="form-link">
-            <a href="#" onClick={(e) => {
+            <a href="/" onClick={(e) => {
               e.preventDefault();
-              // Handle forgot password logic
+
             }}>Forgot Password?</a>
           </div>
         </form>
