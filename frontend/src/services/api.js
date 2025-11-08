@@ -58,6 +58,7 @@ api.interceptors.response.use(
 );
 
 // API URL
+// eslint-disable-next-line no-unused-vars
 const API_URL = process.env.REACT_APP_API_URL;
 
 // Auth API functions

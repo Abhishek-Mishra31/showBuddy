@@ -19,7 +19,7 @@ connectDB();
 
 const apiLimiter = rateLimit({
   windowMs: 24 * 60 * 60 * 1000, // 1 day
-  max: 150,
+  max: 500,
   message: {
     success: false,
     message: "Rate limit exceeded. You can make up to 50 requests per day.",

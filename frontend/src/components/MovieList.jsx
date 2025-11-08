@@ -23,6 +23,7 @@ const MovieList = () => {
   const [editingMovie, setEditingMovie] = useState(null);
 
   // Debounced search function
+  // eslint-disable-next-line no-unused-vars
   const debouncedSearch = useMemo(
     () => debounce((term) => setSearchTerm(term), 300),
     [setSearchTerm]
