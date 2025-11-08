@@ -19,7 +19,7 @@ const Admin = () => {
 
   useEffect(() => {
     fetchBookingStats();
-  });
+  } , [fetchBookingStats]);
 
   const fetchBookingStats = async () => {
     try {
