@@ -55,6 +55,7 @@ const MovieDetails = () => {
     if (dates.length > 0) setSelectedDate(dates[0].date);
     if (showtimes.length > 0) setSelectedTime(showtimes[0]);
     if (theaters.length > 0) setSelectedTheater(theaters[0].id);
+    // eslint-disable-next-line
   }, [id, movies]);
 
   const handleBooking = () => {

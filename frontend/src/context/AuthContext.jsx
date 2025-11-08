@@ -113,6 +113,7 @@ export const AuthProvider = ({ children }) => {
   // Load user on mount and token change
   useEffect(() => {
     loadUser();
+    // eslint-disable-next-line
   }, []);
 
   const value = {

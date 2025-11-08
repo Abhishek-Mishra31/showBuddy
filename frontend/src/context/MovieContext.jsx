@@ -296,6 +296,7 @@ export const MovieProvider = ({ children }) => {
   // Load movies on component mount
   useEffect(() => {
     fetchMovies();
+    // eslint-disable-next-line
   }, []);
 
   const value = {
