@@ -59,8 +59,8 @@ const Navbar = () => {
             Movies
           </Link>
           <Link 
-            to="/bookings" 
-            className={`nav-link ${isActive('/bookings') ? 'active' : ''}`}
+            to="/my-bookings" 
+            className={`nav-link ${isActive('/my-bookings') ? 'active' : ''}`}
             onClick={() => setIsMenuOpen(false)}
           >
             My Bookings

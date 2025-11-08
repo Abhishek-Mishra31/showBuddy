@@ -42,6 +42,7 @@ const MyBookings = () => {
     };
 
     fetchBookings();
+    // eslint-disable-next-line
   }, []);
 
   const filteredBookings = bookings.filter(booking => {
@@ -116,11 +117,9 @@ const MyBookings = () => {
           {filteredBookings.length === 0 ? (
             <div className="no-bookings">
               <div className="no-bookings-icon">🎬</div>
-              <h3>No bookings found</h3>
-              <p>You haven't made any bookings yet. Start exploring movies!</p>
-              <button className="browse-movies-btn" onClick={() => navigate('/')}>
-                Browse Movies
-              </button>
+              <h3>There is no booking here</h3>
+              <p>After booking, you can see them listed here.</p>
+              <button className="browse-movies-btn" onClick={() => navigate('/')}>Browse Movies</button>
             </div>
           ) : (
             filteredBookings.map(booking => (

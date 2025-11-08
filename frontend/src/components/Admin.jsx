@@ -19,7 +19,8 @@ const Admin = () => {
 
   useEffect(() => {
     fetchBookingStats();
-  } , [fetchBookingStats]);
+    // eslint-disable-next-line
+  } , []);
 
   const fetchBookingStats = async () => {
     try {
