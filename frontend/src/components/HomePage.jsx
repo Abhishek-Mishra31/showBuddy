@@ -26,7 +26,7 @@ const HomePage = () => {
       <section className="hero-section">
         <div className="flex flex-col items-center justify-center z-10">
           <div className="spinner"></div>
-          <p className="text-xl font-medium text-white mt-4">Fetching awesome movies for you...</p>
+          <p className="text-xl font-medium text-black mt-4">Fetching awesome movies for you...</p>
         </div>
       </section>
     );
